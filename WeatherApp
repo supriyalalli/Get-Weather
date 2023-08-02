@@ -1,0 +1,90 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class WeatherApp {
+    private static Map<String, WeatherData> dataMap = new HashMap<>();
+
+    public static void main(String[] args) {
+        // Sample data for demonstration purposes
+        dataMap.put("2023-07-15", new WeatherData(30.5, 12.5, 1012));
+        dataMap.put("2023-07-16", new WeatherData(28.3, 15.2, 1008));
+        dataMap.put("2023-07-17", new WeatherData(32.1, 9.8, 1015));
+
+        Scanner scanner = new Scanner(System.in);
+        int option;
+
+        do {
+            System.out.println("1. Get weather");
+            System.out.println("2. Get Wind Speed");
+            System.out.println("3. Get Pressure");
+            System.out.println("0. Exit");
+            System.out.print("Enter your option: ");
+            option = scanner.nextInt();
+
+            switch (option) {
+                case 1:
+                    getWeather(scanner);
+                    break;
+                case 2:
+                    getWindSpeed(scanner);
+                    break;
+                case 3:
+                    getPressure(scanner);
+                    break;
+                case 0:
+                    System.out.println("Exiting the program.");
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        } while (option != 0);
+
+        scanner.close();
+    }
+
+    private static void getWeather(Scanner scanner) {
+        System.out.print("Enter the date (YYYY-MM-DD): ");
+        String date = scanner.next();
+        WeatherData weatherData = dataMap.get(date);
+        if (weatherData != null) {
+            System.out.println("Temperature on " + date + ": " + weatherData.temperature + " °C");
+        } else {
+            System.out.println("Data not available for the given date.");
+        }
+    }
+
+    private static void getWindSpeed(Scanner scanner) {
+        System.out.print("Enter the date (YYYY-MM-DD): ");
+        String date = scanner.next();
+        WeatherData weatherData = dataMap.get(date);
+        if (weatherData != null) {
+            System.out.println("Wind Speed on " + date + ": " + weatherData.windSpeed + " m/s");
+        } else {
+            System.out.println("Data not available for the given date.");
+        }
+    }
+
+    private static void getPressure(Scanner scanner) {
+        System.out.print("Enter the date (YYYY-MM-DD): ");
+        String date = scanner.next();
+        WeatherData weatherData = dataMap.get(date);
+        if (weatherData != null) {
+            System.out.println("Pressure on " + date + ": " + weatherData.pressure + " hPa");
+        } else {
+            System.out.println("Data not available for the given date.");
+        }
+    }
+
+    private static class WeatherData {
+        double temperature;
+        double windSpeed;
+        int pressure;
+
+        WeatherData(double temperature, double windSpeed, int pressure) {
+            this.temperature = temperature;
+            this.windSpeed = windSpeed;
+            this.pressure = pressure;
+        }
+    }
+}
